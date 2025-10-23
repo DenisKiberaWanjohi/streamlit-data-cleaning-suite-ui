@@ -1,0 +1,1 @@
+# Logs viewer logic (placeholder)
