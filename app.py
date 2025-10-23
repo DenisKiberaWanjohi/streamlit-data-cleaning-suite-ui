@@ -28,37 +28,46 @@ if nav_choice == "🏠 Dashboard":
 
         with col1:
             st.markdown("""
-                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1rem;
+                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1.5rem 1rem 1rem 1rem;
                             background-color: #fff; box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-                            text-align: center;'>
-                    <h3 style='margin-bottom: 0.5rem;'>📎 Combine Files</h3>
-                    <p style='font-size: 0.9rem;'>Merge multiple CSV or Excel files into one dataset.</p>
+                            text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;'>
+                    <div>
+                        <h3 style='margin-bottom: 0.5rem;'>📎 Combine Files</h3>
+                        <p style='font-size: 0.9rem;'>Merge multiple CSV or Excel files into one dataset.</p>
+                    </div>
                 </div>
             """, unsafe_allow_html=True)
+            st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
             if st.button("Launch Tool", key="combine_btn"):
                 st.session_state.active_tool = "combine"
 
         with col2:
             st.markdown("""
-                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1rem;
+                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1.5rem 1rem 1rem 1rem;
                             background-color: #fff; box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-                            text-align: center;'>
-                    <h3 style='margin-bottom: 0.5rem;'>✂️ Split File</h3>
-                    <p style='font-size: 0.9rem;'>Split a file by row count or unique column values.</p>
+                            text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;'>
+                    <div>
+                        <h3 style='margin-bottom: 0.5rem;'>✂️ Split File</h3>
+                        <p style='font-size: 0.9rem;'>Split a file by row count or unique column values.</p>
+                    </div>
                 </div>
             """, unsafe_allow_html=True)
+            st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
             if st.button("Launch Tool", key="split_btn"):
                 st.session_state.active_tool = "split"
 
         with col3:
             st.markdown("""
-                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1rem;
+                <div style='border: 1px solid #ccc; border-radius: 10px; padding: 1.5rem 1rem 1rem 1rem;
                             background-color: #fff; box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-                            text-align: center;'>
-                    <h3 style='margin-bottom: 0.5rem;'>🧹 Clean Special Characters</h3>
-                    <p style='font-size: 0.9rem;'>Remove or replace unwanted characters in your text columns.</p>
+                            text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;'>
+                    <div>
+                        <h3 style='margin-bottom: 0.5rem;'>🧹 Clean Special Characters</h3>
+                        <p style='font-size: 0.9rem;'>Remove or replace unwanted characters in your text columns.</p>
+                    </div>
                 </div>
             """, unsafe_allow_html=True)
+            st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
             if st.button("Launch Tool", key="clean_btn"):
                 st.session_state.active_tool = "clean"
 
