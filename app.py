@@ -1,74 +1,92 @@
 import streamlit as st
+from modules import combine, split, clean, logs, support
+from utils.logger import add_log
 
-# Page config for wide layout
-st.set_page_config(page_title="Tool Dashboard", layout="wide")
+st.set_page_config(page_title="Data Cleaning Dashboard", page_icon="🧹", layout="wide")
 
-# Inject CSS for card styling and layout fixes
-st.markdown("""
-<style>
-/* Style each column as a card */
-[data-testid="column"] {
-  background-color: #F9F9F9;  /* light grey card background */
-  border: 1px solid #DDDDDD;  /* subtle border for card outline */
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-/* Remove extra top margin on headings inside cards for tight spacing */
-[data-testid="column"] h1, [data-testid="column"] h2,
-[data-testid="column"] h3, [data-testid="column"] h4 {
-  margin-top: 0.1em;
-}
-/* Ensure paragraph text in cards has consistent spacing */
-[data-testid="column"] p {
-  margin-bottom: 1em;
-}
-/* Push the button container to bottom of the card */
-[data-testid="column"] div.stButton {
-  margin-top: auto;
-  text-align: right;  /* align button to right within card (optional) */
-}
-/* Style the actual button element */
-[data-testid="column"] button {
-  background-color: #2E6EF7;  /* primary color for Launch button */
-  color: white;
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 5px;
-  font-weight: 600;
-  cursor: pointer;
-}
-[data-testid="column"] button:hover {
-  background-color: #1E50B5;  /* darker shade on hover */
-}
-</style>
-""", unsafe_allow_html=True)
+# Initialize session state
+if 'active_tool' not in st.session_state:
+    st.session_state.active_tool = None
+if 'logs' not in st.session_state:
+    st.session_state.logs = []
 
-# Create three equal-width columns for the tool cards
-col1, col2, col3 = st.columns(3)  # all columns have equal width:contentReference[oaicite:4]{index=4}
+# Sidebar
+st.sidebar.title("Navigation")
+nav_choice = st.sidebar.radio("Go to:", ["🏠 Dashboard", "📜 Logs", "❓ Support"], index=0)
 
-# Tool Card 1: Combine Files
-with col1:
-    st.subheader("🔗 Combine Files")
-    st.write("Merge multiple files (Excel, CSV, etc.) into a single consolidated file. "
-             "This tool combines sheets or data tables while preserving formatting.")
-    launched1 = st.button("Launch", key="combine_files")
-    if launched1:
-        st.success("Combine Files tool launched!")
+if nav_choice != "🏠 Dashboard":
+    st.session_state.active_tool = None
 
-# Tool Card 2: Split File
-with col2:
-    st.subheader("✂️ Split File")
-    st.write("Split a large file into smaller parts. Define custom split criteria, like number of rows or file size, to break down big files for easier handling.")
-    launched2 = st.button("Launch", key="split_file")
-    if launched2:
-        st.success("Split File tool launched!")
+# Main content area
+if nav_choice == "🏠 Dashboard":
+    if st.session_state.active_tool is None:
+        st.title("🧰 Data Cleaning Tools")
+        st.markdown("Use the tools below to combine, split, or clean your datasets.")
 
-# Tool Card 3: Clean Special Characters
-with col3:
-    st.subheader("🧹 Clean Special Characters")
-    st.write("Remove or replace unwanted special characters from your data. Ideal for cleaning text in CSV or Excel files before analysis or import.")
-    launched3 = st.button("Launch", key="clean_chars")
-    if launched3:
-        st.success("Clean Special Characters tool launched!")
+        # Styling for tool cards
+        st.markdown("""
+        <style>
+        .card {
+            border: 1px solid #d3d3d3;
+            border-radius: 10px;
+            padding: 1rem;
+            background-color: #fff;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s ease;
+        }
+        .card:hover {
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+        .card h3 {
+            margin-top: 0.5rem;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container():
+                st.markdown("<div class='card'>", unsafe_allow_html=True)
+                st.markdown("### 📎 Combine Files")
+                st.write("Merge multiple CSV or Excel files into one dataset.")
+                if st.button("Launch Tool", key="combine_btn"):
+                    st.session_state.active_tool = "combine"
+                st.markdown("</div>", unsafe_allow_html=True)
+
+        with col2:
+            with st.container():
+                st.markdown("<div class='card'>", unsafe_allow_html=True)
+                st.markdown("### ✂️ Split File")
+                st.write("Split a file by row count or unique column values.")
+                if st.button("Launch Tool", key="split_btn"):
+                    st.session_state.active_tool = "split"
+                st.markdown("</div>", unsafe_allow_html=True)
+
+        with col3:
+            with st.container():
+                st.markdown("<div class='card'>", unsafe_allow_html=True)
+                st.markdown("### 🧹 Clean Special Characters")
+                st.write("Remove or replace unwanted characters in your text columns.")
+                if st.button("Launch Tool", key="clean_btn"):
+                    st.session_state.active_tool = "clean"
+                st.markdown("</div>", unsafe_allow_html=True)
+
+    else:
+        # Active tool view
+        if st.session_state.active_tool == "combine":
+            combine.run_combine_tool()
+        elif st.session_state.active_tool == "split":
+            split.run_split_tool()
+        elif st.session_state.active_tool == "clean":
+            clean.run_clean_tool()
+
+        st.write("")
+        if st.button("⬅️ Back to Dashboard"):
+            st.session_state.active_tool = None
+
+elif nav_choice == "📜 Logs":
+    logs.show_logs_page()
+
+elif nav_choice == "❓ Support":
+    support.show_support_page()
