@@ -3,7 +3,7 @@
 ## Overview
 **Data Cleaning Suite** is a Streamlit-based web application designed for teams to automate repetitive data preparation tasks, where members often use their own methods to clean and prep data, which can be time-consuming. The app provides an intuitive dashboard with three primary tools for data analysts and engineers: combining multiple files, splitting large files, and cleaning special characters in text data. The interface is designed for ease of use, featuring a sidebar for navigation and a clean dashboard displaying the three tools as card-style panes. Users can upload Excel or CSV files, preview data, apply transformations, and download the results without writing any code. This application is ideal for standardizing team workflows, quickly merging datasets, breaking down large files, or cleaning and standardizing text fields across multiple datasets.
 
-##UI link
+## UI link
 https://data-cleaning-suite-ui.streamlit.app/
 
 ## Features
